@@ -4,8 +4,9 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const fetchuser = require("../middleware/fetchuser");
 
-const jwt_sceret = "abcd"
+const jwt_sceret = "abcd";
 // console.log(jwt_sceret)
 
 // endpoint for creating user
@@ -49,9 +50,7 @@ router.post(
 
       const authtoken = jwt.sign(data, jwt_sceret);
       res.json({ authtoken });
-
-    } 
-    catch (error) {
+    } catch (error) {
       res.json(error);
     }
   }
@@ -73,7 +72,7 @@ router.post(
     // const { email, password } = req.body.email;
 
     try {
-      let user = await User.findOne({ email: req.body.email});
+      let user = await User.findOne({ email: req.body.email });
 
       if (!user) {
         return res
@@ -81,14 +80,16 @@ router.post(
           .json({ error: "Please try to login with correct credentials" });
       }
 
-      let passwordcheck = await bcrypt.compare(req.body.password, user.password);
+      let passwordcheck = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
 
       if (!passwordcheck) {
         return res
           .status(400)
           .json({ error: "Please try to login with correct credentials" });
       }
-
 
       let data = {
         user: {
@@ -98,11 +99,22 @@ router.post(
 
       const authtoken = jwt.sign(data, jwt_sceret);
       res.json({ authtoken });
-
     } catch (error: any) {
-      res.json(error.message)
+      res.json(error.message);
     }
   }
 );
+
+router.post("/getuser", fetchuser, async (req: any, res: any) => {
+  try {
+
+    const userid = req.user.id;
+    const user = await User.findById(userid).select('-password')
+    res.send(user)
+
+  } catch (error: any) {
+    res.send(error.message)
+  }
+});
 
 module.exports = router;
