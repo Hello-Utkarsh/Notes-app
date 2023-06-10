@@ -13,6 +13,7 @@ const NotesSchema = new Schema({
 
   description: {
     type: String,
+    unique: true
   },
 
   date: {
