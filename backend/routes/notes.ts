@@ -66,4 +66,30 @@ router.post(
   }
 );
 
+// updating notes
+router.put(
+  "/updatenotes/:id",fetchuser,
+  async (req: any, res: any) => {
+
+    const {title, description} = req.body
+
+    // creating new note
+    let newnote =  {
+      "title": undefined,
+      "description": undefined
+    }
+
+    if (title){newnote.title = title}
+    if (description){newnote.description = description}
+
+    let note = await Notes.findById(req.params.id)
+    if(!note){res.send("Not Found")}
+
+    if(note.user.toString() !== req.user.id){
+      res.send("Unauthorized")
+    }
+    note = await Notes.findByIdAndUpdate(req.params.id, {$set: newnote}, {new: true})
+    res.json(note)
+  })
+
 module.exports = router;
