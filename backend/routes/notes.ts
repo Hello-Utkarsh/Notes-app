@@ -48,7 +48,7 @@ router.post(
     let { title, description, date } = req.body;
 
     try {
-        // creating new note
+      // creating new note
       let notes = new Notes({
         user: req.user.id,
         title: title,
@@ -56,10 +56,9 @@ router.post(
         date: date,
       });
 
-    //   saving the note to mongodb
+      //   saving the note to mongodb
       const savednotes = await notes.save();
       res.json(savednotes);
-
     } catch (error: any) {
       res.send(error.message);
     }
@@ -67,29 +66,55 @@ router.post(
 );
 
 // updating notes
-router.put(
-  "/updatenotes/:id",fetchuser,
-  async (req: any, res: any) => {
+router.put("/updatenotes/:id", fetchuser, async (req: any, res: any) => {
+  const { title, description } = req.body;
 
-    const {title, description} = req.body
+  // creating new note
+  let newnote = {
+    title: undefined,
+    description: undefined,
+  };
 
-    // creating new note
-    let newnote =  {
-      "title": undefined,
-      "description": undefined
-    }
+  if (title) {
+    newnote.title = title;
+  }
+  if (description) {
+    newnote.description = description;
+  }
 
-    if (title){newnote.title = title}
-    if (description){newnote.description = description}
+  let note = await Notes.findById(req.params.id);
+  if (!note) {
+    res.send("Not Found");
+  }
 
-    let note = await Notes.findById(req.params.id)
-    if(!note){res.send("Not Found")}
+  if (note.user.toString() !== req.user.id) {
+    res.send("Unauthorized");
+  }
+  note = await Notes.findByIdAndUpdate(
+    req.params.id,
+    { $set: newnote },
+    { new: true }
+  );
+  console.log(note.user, req.user.id);
+  res.json(note);
+});
 
-    if(note.user.toString() !== req.user.id){
-      res.send("Unauthorized")
-    }
-    note = await Notes.findByIdAndUpdate(req.params.id, {$set: newnote}, {new: true})
-    res.json(note)
-  })
+// deleting notes
+router.delete("/deletenotes/:id", fetchuser, async (req: any, res: any) => {
+  // creating new note
+
+  let note = await Notes.findById(req.params.id);
+  if (!note) {
+    return res.send("Not Found");
+  }
+
+  if (note.user.toString() !== req.user.id) {
+    return res.send("Unauthorized");
+  }
+  note = await Notes.findByIdAndDelete(
+    req.params.id,
+  );
+  res.json({"Success": "Your notes has been successfully deleted", note: note});
+});
 
 module.exports = router;
