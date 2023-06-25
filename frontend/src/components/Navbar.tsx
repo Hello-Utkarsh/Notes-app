@@ -1,12 +1,22 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React, {useEffect} from 'react'
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+
+  let location = useLocation();
+
+  // useEffect(() => {
+  // }, [location]);
+
   return (
-    <div>
-      <Link to="Home">Home</Link>
-      <Link to="*">No Page</Link>
-    </div>
+    <nav className='navbar'>
+      <h1>Notes-App</h1>
+      <ul className='navbar-locate-page'>
+        <Link to="/" style={{color: `${location.pathname=="/"?"white":"grey"}`}}>Home</Link>
+        <Link to="/About" style={{color: `${location.pathname=="/About"?"white":"grey"}`}}>About</Link>
+      </ul>
+    </nav>
+
   )
 }
 
