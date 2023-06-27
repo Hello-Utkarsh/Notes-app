@@ -10,7 +10,7 @@ import About from './components/About';
 function App() {
 
   return (
-    <>
+    <div className='bg-dark text-white'>
       <NoteState>
         <BrowserRouter>
           <Navbar />
@@ -28,7 +28,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </NoteState>
-    </>
+    </div>
   )
 }
 

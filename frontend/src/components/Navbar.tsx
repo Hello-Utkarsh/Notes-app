@@ -5,15 +5,12 @@ const Navbar = () => {
 
   let location = useLocation();
 
-  // useEffect(() => {
-  // }, [location]);
-
   return (
-    <nav className='navbar'>
+    <nav className='d-flex justify-content-between text-decoration-none mt-4 mx-5' >
       <h1>Notes-App</h1>
-      <ul className='navbar-locate-page'>
-        <Link to="/" style={{color: `${location.pathname=="/"?"white":"grey"}`}}>Home</Link>
-        <Link to="/About" style={{color: `${location.pathname=="/About"?"white":"grey"}`}}>About</Link>
+      <ul className='d-flex justify-content-around w-25'>
+        <Link to="/" className='text-decoration-none' style={{color: `${location.pathname=="/"?"white":"grey"}`}}>Home</Link>
+        <Link to="/About" className='text-decoration-none' style={{color: `${location.pathname=="/About"?"white":"grey"}`}}>About</Link>
       </ul>
     </nav>
 

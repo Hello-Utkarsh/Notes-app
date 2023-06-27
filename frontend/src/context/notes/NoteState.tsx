@@ -55,8 +55,28 @@ export const NoteState: any = (props: any) => {
 
     const [notes, setNotes] = useState(initialNotes)
 
+    const addNote = (title: string, description: string)=>{
+        let note = {
+            "_id": "648407968a45c067695072d3",
+            "user": "6483ea137c29b8c6621ad35b",
+            "title": "mytitile22",
+            "description": "do it very very2 fast [ADDED]",
+            "date": "2023-06-10T05:18:14.783Z",
+            "__v": 0
+        }
+        setNotes(notes.push(note))
+    }
+
+    const deleteNote = ()=> {
+
+    }
+
+    const editNote = ()=>{
+
+    }
+
     return (
-        <NoteContext.Provider value={{ notes, setNotes }}>
+        <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote }}>
             {props.children}
         </NoteContext.Provider>
     )

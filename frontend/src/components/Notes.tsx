@@ -4,10 +4,10 @@ import NoteItems from './NoteItems';
 
 const Notes = () => {
     const context = useContext(NoteContext)
-    const { notes, setNotes }: any = context;
+    const { notes, addNote }: any = context;
 
     return (
-        <div className='' style={{display: "grid", gridTemplateColumns: "auto auto auto", justifyContent: "space-around", alignItems: "center", textAlign: "center"}}>
+        <div style={{display: "grid", gridTemplateColumns: "auto auto auto", justifyContent: "space-around", alignItems: "center", margin: '20px 10px'}}>
             {notes.map((note: any) => {
                 return <NoteItems note = {note}/>
             })}
