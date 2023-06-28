@@ -7,7 +7,7 @@ const Notes = () => {
     const { notes, addNote }: any = context;
 
     return (
-        <div style={{display: "grid", gridTemplateColumns: "auto auto auto", justifyContent: "space-around", alignItems: "center", margin: '20px 10px'}}>
+        <div style={{display: "grid", width:'97vw', gridTemplateColumns: "auto auto auto", justifyContent: "space-around", alignItems: "center", margin: '20px 10px'}}>
             {notes.map((note: any) => {
                 return <NoteItems note = {note}/>
             })}

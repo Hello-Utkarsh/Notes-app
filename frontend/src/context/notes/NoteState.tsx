@@ -4,7 +4,7 @@ import NoteContext from "./NoteContext";
 export const NoteState: any = (props: any) => {
     let initialNotes = [
         {
-            "_id": "648407749a7eb5a9b4ef40d2",
+            "_id": "648407749a7eb5a9b4ef40d",
             "user": "6483ea137c29b8c6621ad35b",
             "title": "mytitile2",
             "description": "do it very very fast",
@@ -20,7 +20,7 @@ export const NoteState: any = (props: any) => {
             "__v": 0
         },
         {
-            "_id": "648407749a7eb5a9b4ef40d2",
+            "_id": "648407749a7eb5a9b4ef40",
             "user": "6483ea137c29b8c6621ad35b",
             "title": "mytitile2",
             "description": "do it very very fast",
@@ -28,7 +28,7 @@ export const NoteState: any = (props: any) => {
             "__v": 0
         },
         {
-            "_id": "648407968a45c067695072d3",
+            "_id": "648407968a45c06769507",
             "user": "6483ea137c29b8c6621ad35b",
             "title": "mytitile22",
             "description": "do it very very2 fast",
@@ -53,22 +53,23 @@ export const NoteState: any = (props: any) => {
         },
     ]
 
-    const [notes, setNotes] = useState(initialNotes)
+    const [notes, setNotes]: any = useState(initialNotes)
 
     const addNote = (title: string, description: string)=>{
-        let note = {
+        const note = {
             "_id": "648407968a45c067695072d3",
             "user": "6483ea137c29b8c6621ad35b",
-            "title": "mytitile22",
-            "description": "do it very very2 fast [ADDED]",
+            "title": title,
+            "description": description,
             "date": "2023-06-10T05:18:14.783Z",
             "__v": 0
         }
-        setNotes(notes.push(note))
+        setNotes(notes.concat(note))
     }
 
-    const deleteNote = ()=> {
-
+    const deleteNote = (id: string)=> {
+        const newNote = notes.filter((note: any)=>{return note._id !== id})
+        setNotes(newNote)
     }
 
     const editNote = ()=>{
